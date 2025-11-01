@@ -155,7 +155,7 @@
 
     const jsonEl     = document.getElementById('json');
     const list       = document.getElementById('list');
-    const cardTpl    = document.getElementById('card');
+    const cardTpl    = document.getElementById('cardTpl');
 
     const previewBox = document.getElementById('previewBox');
     const preview    = document.getElementById('preview');
@@ -189,7 +189,7 @@
 
       n.querySelector('.c-title').textContent   = titleEl.value || '';
       n.querySelector('.c-summary').textContent = summaryEl.value || '';
-      n.querySelector('.c-cat').textContent = categoryEl.value || '';
+      n.querySelector('.c-cat').textContent = it.category || '';
 
       const d = (dateEl.value || new Date().toISOString().slice(0,10));
       n.querySelector('.c-date').textContent = new Date(d).toLocaleDateString();
