@@ -345,8 +345,9 @@
 
       // JSON debug
       document.getElementById('json').textContent = JSON.stringify({profile: state.profile, items: state.items}, null, 2);
-    }
-    
+      
+      updateStats();
+      }
 
     function hydrateProfile(p){
       if(!p) return;
