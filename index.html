@@ -229,17 +229,25 @@
     });
 
     function mapToPublic(it){
-      return {
-        title: it.title,
-        desc: it.summary,
-        cover: it.cover || 'https://picsum.photos/seed/'+encodeURIComponent(it.title)+'/1200/675',
-        url: it.link || '',
-        status: it.link ? 'live' : 'soon',
-        kind: (it.category||'').toLowerCase(),
-        category: it.category || 'Tech',
-        createdAt: it.createdAt
-      };
-    }
+    return {
+      title: it.title,
+      desc: it.summary,
+  
+      // cover auto si pas d'image custom
+      cover: it.cover || 'https://picsum.photos/seed/' + encodeURIComponent(it.title) + '/1200/675',
+  
+      url: it.link || '',
+      status: it.link ? 'live' : 'soon',
+  
+      kind: (it.category || '').toLowerCase(),
+      category: it.category || 'Tech',
+  
+      effort: it.effort || null,
+      date: it.date || null,
+  
+      createdAt: it.createdAt
+    };
+  }
 
     function render(){
       styleActiveChips();
