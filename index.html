@@ -279,7 +279,30 @@
         return state.sortKey === 'Newest'
           ? db - da
           : da - db;
-      });
+      }
+        function parseEffort(str) {
+    if (!str) return 0;
+    str = str.toLowerCase().trim();
+    let total = 0;
+    if (str.includes('j')) total += parseFloat(str) * 24;
+    if (str.includes('h')) total += parseFloat(str);
+    if (str.includes('min')) total += parseFloat(str) / 60;
+    return total;
+  }
+
+  const totalHours = items.reduce((acc, x) => acc + parseEffort(x.effort), 0);
+  const contributions = items.length;
+  const text = `this user gave ${totalHours.toFixed(1)} hours of her life for Ritual through ${contributions} contributions.`;
+
+  let summary = document.getElementById('summaryLine');
+  if (!summary) {
+    summary = document.createElement('p');
+    summary.id = 'summaryLine';
+    summary.className = 'text-base-sub text-sm text-center mt-8';
+    document.querySelector('main').appendChild(summary);
+  }
+  summary.textContent = text;
+});
 
       grid.innerHTML='';
       if(items.length===0){
