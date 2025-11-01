@@ -1,4 +1,14 @@
 {
   "profile": {},
-  "items": []
+  "items": [
+    {
+      "title": "meme #1",
+      "summary": "when they closed the \"21 Days of Prompts\" submission channel after an hour",
+      "category": "Meme",
+      "link": "https://discord.com/channels/1210468736205852672/1210630180167622736/1422618246498095265",
+      "effort": "2min",
+      "date": "01/10/25",
+      "createdAt": "2025-11-01T12:03:15.810Z"
+    }
+  ]
 }
