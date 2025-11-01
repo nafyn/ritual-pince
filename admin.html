@@ -175,7 +175,10 @@
     const category = categoryEl.value.trim();
     const link = linkEl.value.trim();
     const effort = document.getElementById("effort").value.trim();
-    const date = document.getElementById("date").value.trim();
+    let date = document.getElementById("date").value.trim();
+    if (!date) {
+    date = new Date().toISOString().slice(0, 10);
+  }
     if (!title) return alert('Titre requis.');
     if (!category) return alert('Choisis une catégorie.');
 
