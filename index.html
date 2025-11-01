@@ -264,45 +264,24 @@
   }
 
     function updateStats() {
-      const statsEl = document.getElementById("stats");
-      if (!statsEl) return;
-    
-      const items = state.items || [];
-      const contributions = items.length;
-    
-      // On convertit les efforts en heures si possible
-      let totalHours = 0;
-    
-      items.forEach(it => {
-        if (!it.effort) return;
-    
-        let str = it.effort.trim().toLowerCase();
-    
-        // ex: "2h" → 2h
-        if (str.endsWith("h")) {
-          totalHours += parseFloat(str);
-          return;
-        }
-    
-        // ex: "30min" → 0.5h
-        if (str.includes("min")) {
-          const mins = parseFloat(str);
-          totalHours += (mins / 60);
-          return;
-        }
-    
-        // ex: "2j" → 48h
-        if (str.endsWith("j")) {
-          totalHours += parseFloat(str) * 24;
-          return;
-        }
-      });
-    
-      // On arrondit gentiment
-      totalHours = Math.round(totalHours * 10) / 10;
-    
-      statsEl.textContent = `gave ~${totalHours}h through ${contributions} contributions`;
-    }
+    const statsEl = document.getElementById("stats");
+    if (!statsEl) return;
+  
+    const items = state.items.map(mapToPublic) || [];
+    const contributions = items.length;
+  
+    let totalHours = 0;
+    items.forEach(it => {
+      if (!it.effort) return;
+      let str = it.effort.trim().toLowerCase();
+      if (str.endsWith("h")) totalHours += parseFloat(str);
+      else if (str.includes("min")) totalHours += parseFloat(str) / 60;
+      else if (str.endsWith("j")) totalHours += parseFloat(str) * 24;
+    });
+  
+    totalHours = Math.round(totalHours * 10) / 10;
+    statsEl.textContent = `gave ~${totalHours}h through ${contributions} contributions`;
+  }
 
     function render(){
       styleActiveChips();
@@ -344,8 +323,8 @@
       })
 
       // JSON debug
-      document.getElementById('json').textContent = JSON.stringify({profile: state.profile, items: state.items}, null, 2);
-      
+      const jsonEl = document.getElementById('json');
+      if (jsonEl) jsonEl.textContent = JSON.stringify({profile: state.profile, items: state.items}, null, 2);
       updateStats();
       }
 
