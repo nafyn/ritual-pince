@@ -94,15 +94,23 @@
 
     <!-- Cards side -->
     <section class="space-y-4">
-      <div class="rounded-2xl p-5 border border-base-border/40 bg-base-surface/70 backdrop-blur-sm">
-        <div class="flex items-center justify-between mb-3">
-          <h2 class="text-lg font-semibold">Vos contributions</h2>
-          <button id="seed" class="text-sm px-3 py-1.5 rounded border border-base-border/40">Seed demo</button>
-        </div>
-        <div id="livePreview" class="hidden"></div>
-        <div id="list" class="grid sm:grid-cols-2 gap-4"></div>
-      </div>
-    </section>
+
+  <!-- PREVIEW ICI -->
+  <div id="previewBox" class="rounded-2xl p-5 border border-base-border/40 bg-base-surface/70 backdrop-blur-sm mb-4">
+    <h2 class="text-lg font-semibold mb-3">Preview</h2>
+    <div id="preview"></div>
+  </div>
+
+  <div class="rounded-2xl p-5 border border-base-border/40 bg-base-surface/70 backdrop-blur-sm">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-lg font-semibold">Vos contributions</h2>
+      <button id="seed" class="text-sm px-3 py-1.5 rounded border border-base-border/40">Seed demo</button>
+    </div>
+
+    <div id="list" class="grid sm:grid-cols-2 gap-4"></div>
+  </div>
+  </section>
+    
     <section class="space-y-4">
       <div class="rounded-2xl p-5 border border-base-border/40 bg-base-surface/70 backdrop-blur-sm">
         <div class="flex items-center justify-between mb-3">
