@@ -65,6 +65,12 @@
             <option>Tech</option>
           </select>
           <input class="w-full px-3 py-2 rounded bg-base-card border border-base-border/30" id="link" placeholder="Lien (optionnel)" />
+            <!-- Effort -->
+          <input class="w-full px-3 py-2 mt-3 rounded bg-base-card border border-base-border/30" id="effort" placeholder="Effort (ex: 1h, 20min, 2j…)" />
+
+            <!-- Date -->
+          <input class="w-full px-3 py-2 mt-3 rounded bg-base-card border border-base-border/30" id="date" placeholder="Date (ex: 01/11/2025)" />
+
           <div class="flex items-center gap-3 pt-2">
             <button id="submitBtn" type="submit" class="px-3 py-2 rounded bg-acc/20 border border-acc/50 hover:bg-acc/30">Ajouter</button>
             <button id="cancelEdit" type="button" class="hidden px-3 py-2 rounded border border-base-border/40">Annuler</button>
@@ -168,10 +174,20 @@
     const summary = summaryEl.value.trim();
     const category = categoryEl.value.trim();
     const link = linkEl.value.trim();
+    const effort = document.getElementById("effort").value.trim();
+    const date = document.getElementById("date").value.trim();
     if (!title) return alert('Titre requis.');
     if (!category) return alert('Choisis une catégorie.');
 
-    const item = { title, summary, category, link: link || null, createdAt: new Date().toISOString() };
+    const item = {
+    title,
+    summary,
+    category,
+    link: link || null,
+    effort: effort || null,
+    date: date || null,
+    createdAt: new Date().toISOString()
+    };
 
     if (editingIndex > -1) {
       data.items[editingIndex] = { ...data.items[editingIndex], ...item };
