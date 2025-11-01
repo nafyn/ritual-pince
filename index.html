@@ -273,7 +273,7 @@
            : new Date(p.createdAt || Date.now()).toLocaleDateString();
         n.querySelector('.c-title').textContent = p.title;
         n.querySelector('.c-summary').textContent = p.desc || '';
-        n.querySelector('.c-eff').textContent = p.effort ? `Effort ~ ${p.effort}` : '';
+        n.querySelector('.c-eff').textContent = p.effort ? `effort ~ ${p.effort}` : '';
         
         const btn = n.querySelector('.c-link');
         const soon = n.querySelector('.c-soon');
