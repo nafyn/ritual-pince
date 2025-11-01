@@ -271,8 +271,15 @@
         const s=state.q.trim().toLowerCase();
         items = items.filter(x=> (x.title||'').toLowerCase().includes(s) || (x.desc||'').toLowerCase().includes(s) || (x.kind||'').includes(s));
       }
-      if(state.sortKey==='Newest') items.sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt));
-      if(state.sortKey==='Oldest') items.sort((a,b)=> new Date(a.createdAt)-new Date(b.createdAt));
+      
+      items.sort((a, b) => {
+        const da = new Date(a.date || a.createdAt);
+        const db = new Date(b.date || b.createdAt);
+      
+        return state.sortKey === 'Newest'
+          ? db - da
+          : da - db;
+      });
 
       grid.innerHTML='';
       if(items.length===0){
