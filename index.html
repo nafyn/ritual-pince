@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fantasytale – Portail</title>
+  <meta name="description" content="Portail public des contributions – esthétique dark émeraude." />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            base: {
+              bg: '#0b0f0e',
+              soft: '#0e1311',
+              surface: '#111614',
+              card: '#141a1e',
+              border: 'rgba(255,255,255,0.06)',
+              text: '#d6e2dc',
+              sub: '#9fb3ab'
+            },
+            acc: '#40ffaf', // vert demandé
+          },
+          boxShadow: {
+            glow: '0 0 0 3px rgba(64,255,175,0.15) inset'
+          },
+          borderRadius: {
+            xxl: '1.25rem'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body{background: radial-gradient(1200px 600px at 10% -10%, rgba(64,255,175,.08), transparent),
+                     radial-gradient(900px 500px at 90% -20%, rgba(64,255,175,.06), transparent),
+                     #0b0f0e;}
+    ::selection{background:#40ffaf;color:#001b0b}
+    /* subtle grain */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E") repeat;
+    z-index: -1;
+  }
+  /* scrollbar styling */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(64,255,175,0.25); }
+  html { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.08) transparent; }
+  /* refined minimal scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.08) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.08);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(64,255,175,0.35);
+  }
+  /* Hide scrollbar completely */
+  * {
+    scrollbar-width: none;
+  }
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Emerald halo on page edge */
+  body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 2px;
+    height: 100vh;
+    background: linear-gradient(to bottom, rgba(64,255,175,0.45), rgba(64,255,175,0.05));
+    pointer-events: none;
+    opacity: 0.55;
+    mix-blend-mode: screen;
+  }
+</style>
+</head>
+<body class="min-h-screen text-base-text">
+  <!-- Top bar -->
+  <header class="sticky top-0 z-10 backdrop-blur border-b border-base-border/50" style="background: rgba(10,14,12,0.6)">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
+      <span class="inline-flex items-center gap-2 font-semibold text-base-text">
+        <span class="size-3 rounded-full" style="background:#40ffaf"></span>
+        Ritual Contributions
+      </span>
+      
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6 space-y-4">
+    <!-- Profile card -->
+    <section class="rounded-xxl p-5 border border-base-border/20 bg-base-surface/70 backdrop-blur-sm">
+      <div class="flex items-start gap-4">
+        <img id="pfAvatar" src="https://avatars.githubusercontent.com/u/9919?s=200&v=4" class="size-16 rounded-full ring-2" style="--tw-ring-color:#40ffaf" alt="avatar"/>
+        <div class="flex-1">
+          <h1 id="pfName" class="text-2xl font-bold">Fantasytale</h1>
+          <p id="pfBio" class="text-sm text-base-sub mt-1">ritty community member :)</p>
+          <div class="flex flex-wrap gap-2 mt-3 text-sm">
+            <a id="pfX" class="px-2 py-1 rounded-full border border-base-border/20 text-base-text/80 hover:text-acc" target="_blank" rel="noreferrer">X</a>
+            <a id="pfGit" class="px-2 py-1 rounded-full border border-base-border/20 text-base-text/80 hover:text-acc" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search + filters -->
+    <section class="rounded-xxl p-5 border border-base-border/20 bg-base-surface/70 backdrop-blur-sm">
+      <div class="flex flex-wrap items-center gap-3">
+        <div class="flex-1">
+          <div class="px-3 py-2 rounded-lg border border-base-border/20 w-full bg-white/5 backdrop-blur-sm">
+            <input id="q" placeholder="Search title or tags…" class="w-full bg-transparent outline-none" />
+          </div>
+        </div>
+        <div id="chips" class="flex flex-wrap items-center gap-2"></div>
+        <div>
+          <div id="sortChips" class="flex items-center gap-2">
+            <button data-sort="Newest" class="px-3 py-1.5 rounded-full border text-sm">Newest</button>
+            <button data-sort="Oldest" class="px-3 py-1.5 rounded-full border text-sm">Oldest</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Grid -->
+    <section id="grid" class="grid sm:grid-cols-2 gap-4"></section>
+
+    <!-- JSON (optional debug) -->
+    <section class="rounded-xxl p-5 border border-base-border/20 bg-base-surface/70 backdrop-blur-sm">
+      <h2 class="text-base font-semibold">Current JSON</h2>
+      <p class="text-xs text-base-sub">Ce bloc est optionnel et peut être retiré en prod.</p>
+      <pre id="json" class="mt-3 text-xs rounded p-3 overflow-auto max-h-64 border border-base-border/20 bg-[#0a0e0c]"></pre>
+    </section>
+  </main>
+
+  <footer class="border-t border-base-border/20">
+    <div class="max-w-6xl mx-auto px-4 py-5 text-sm text-base-sub flex items-center justify-between">
+      <span>inspired by Fantasytale Portal</span>
+      <span>this user is virtually lost in permanent delusion</span>
+    </div>
+  </footer>
+
+  <template id="cardTpl">
+    <article class="relative rounded-2xl border p-4 bg-base-card border-base-border/20">
+      <div class="flex items-start justify-between">
+        <span class="text-xs px-2 py-1 rounded-full border border-base-border/20">cat</span>
+        <span class="date text-xs text-base-sub">--/--/----</span>
+      </div>
+      <h3 class="mt-3 text-lg font-semibold">Title</h3>
+      <p class="desc text-sm mt-1 text-base-sub">Summary</p>
+      <div class="mt-4 flex items-center gap-2">
+        <a class="btn inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-acc/70 text-acc hover:shadow-glow" target="_blank" rel="noreferrer">Open link →</a>
+        <span class="soon hidden text-xs px-2 py-1 rounded-lg" style="background: rgba(64,255,175,0.1); color:#40ffaf">Soon</span>
+      </div>
+      <div class="tags mt-3 text-xs text-base-sub lowercase"></div>
+      <div class="absolute inset-0 rounded-2xl pointer-events-none" style="box-shadow: inset 0 0 0 1px rgba(64,255,175,0.04)"></div>
+    </article>
+  </template>
+
+  <script>
+    const TABS = ["All","Thread","Art","Meme","Event","Community","Tech"];
+    let state = { items: [], profile: {}, tab: 'All', q: '', sortKey: 'Newest' };
+
+    const grid = document.getElementById('grid');
+    const tpl = document.getElementById('cardTpl');
+    const chips = document.getElementById('chips');
+    const q = document.getElementById('q');
+    const sortChips = document.getElementById('sortChips');
+
+    // Build chips
+    TABS.forEach(t=>{
+      const b = document.createElement('button');
+      b.textContent = t;
+      b.className = 'px-3 py-1.5 rounded-full border text-sm';
+      b.style.borderColor = 'rgba(255,255,255,0.06)';
+      b.addEventListener('click', ()=>{ state.tab=t; render(); });
+      chips.appendChild(b);
+    });
+
+    function styleActiveChips(){
+      // category chips
+      [...chips.children].forEach(ch=>{
+        const on = ch.textContent===state.tab;
+        ch.style.borderColor = on? '#40ffaf' : 'rgba(255,255,255,0.06)';
+        ch.style.color      = on? '#40ffaf' : '';
+        ch.style.boxShadow  = on? '0 0 0 3px rgba(64,255,175,0.15) inset' : 'none';
+        ch.style.background = on? 'rgba(64,255,175,0.08)' : 'transparent';
+      });
+      // sort chips
+      if (sortChips) {
+        sortChips.querySelectorAll('button').forEach(btn=>{
+          const on = btn.dataset.sort===state.sortKey;
+          btn.style.borderColor = on? '#40ffaf' : 'rgba(255,255,255,0.06)';
+          btn.style.color      = on? '#40ffaf' : '';
+          btn.style.boxShadow  = on? '0 0 0 3px rgba(64,255,175,0.15) inset' : 'none';
+          btn.style.background = on? 'rgba(64,255,175,0.08)' : 'transparent';
+        })
+      }
+    }
+
+    q.addEventListener('input', ()=>{ state.q=q.value; render(); });
+    // sort chips events
+    sortChips.querySelectorAll('button').forEach(btn=>{
+      btn.style.borderColor = 'rgba(255,255,255,0.06)';
+      btn.addEventListener('click',()=>{ state.sortKey = btn.dataset.sort; render(); });
+    });
+
+    function mapToPublic(it){
+      return {
+        title: it.title,
+        desc: it.summary,
+        cover: it.cover || 'https://picsum.photos/seed/'+encodeURIComponent(it.title)+'/1200/675',
+        url: it.link || '',
+        status: it.link ? 'live' : 'soon',
+        kind: (it.category||'').toLowerCase(),
+        category: it.category || 'Tech',
+        createdAt: it.createdAt
+      };
+    }
+
+    function render(){
+      styleActiveChips();
+      let items = state.items.map(mapToPublic);
+      if(state.tab!=='All') items = items.filter(x=>x.category===state.tab);
+      if(state.q.trim()){
+        const s=state.q.trim().toLowerCase();
+        items = items.filter(x=> (x.title||'').toLowerCase().includes(s) || (x.desc||'').toLowerCase().includes(s) || (x.kind||'').includes(s));
+      }
+      if(state.sortKey==='Newest') items.sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt));
+      if(state.sortKey==='Oldest') items.sort((a,b)=> new Date(a.createdAt)-new Date(b.createdAt));
+
+      grid.innerHTML='';
+      if(items.length===0){
+        grid.innerHTML = '<div class="rounded-2xl p-5 border border-base-border/20 bg-base-surface/70 backdrop-blur-sm text-base-sub">No items.</div>';
+        return;
+      }
+      items.forEach(p=>{
+        const n = tpl.content.cloneNode(true);
+        n.querySelector('span').textContent = p.category;
+        n.querySelector('.date').textContent = new Date(p.createdAt||Date.now()).toLocaleDateString();
+        n.querySelector('h3').textContent = p.title;
+        n.querySelector('.desc').textContent = p.desc||'';
+        n.querySelector('.tags').textContent = p.kind||'';
+        const btn = n.querySelector('.btn');
+        const soon = n.querySelector('.soon');
+        if(p.url){ btn.href=p.url; } else { btn.classList.add('hidden'); soon.classList.remove('hidden'); }
+        grid.appendChild(n);
+      })
+
+      // JSON debug
+      document.getElementById('json').textContent = JSON.stringify({profile: state.profile, items: state.items}, null, 2);
+    }
+
+    function hydrateProfile(p){
+      if(!p) return;
+      if(p.avatar) document.getElementById('pfAvatar').src = p.avatar;
+      if(p.name) document.getElementById('pfName').textContent = p.name;
+      if(p.bio) document.getElementById('pfBio').textContent = p.bio;
+      if(p.x){ const a=document.getElementById('pfX'); a.href = p.x.startsWith('http')? p.x : 'https://x.com/'+p.x.replace('@',''); }
+      if(p.github){ const a=document.getElementById('pfGit'); a.href = p.github.startsWith('http')? p.github : 'https://github.com/'+p.github; }
+    }
+
+    async function boot(){
+      // 1) essaie de charger contributions.json
+      try{
+        const r = await fetch('contributions.json',{cache:'no-store'});
+        if(r.ok){
+          const data = await r.json();
+          state.items = Array.isArray(data.items)? data.items : [];
+          state.profile = data.profile||{};
+          hydrateProfile(state.profile);
+          render();
+          return;
+        }
+      }catch(_){/* ignore */}
+
+      // 2) fallback de démo si pas de JSON
+      state.profile = { name: 'Fantasytale', bio: 'ritty community member :)', x: 'ritty', github: 'ritty' };
+      state.items = [
+        {title:'Ritual Album Event', category:'Event', summary:'Twitter Post', link:'#', tags:['event'], createdAt: new Date().toISOString()},
+        {title:'Ritual Collection #7', category:'Art', summary:'Twitter Post', link:'#', tags:['art'], createdAt: new Date(Date.now()-86400000).toISOString()},
+      ];
+      hydrateProfile(state.profile);
+      render();
+    }
+
+    const yEl = document.getElementById('year'); if (yEl) { yEl.textContent = new Date().getFullYear(); }
+    boot();
+  </script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Contributions</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            acc: '#40ffaf',
+            base: {
+              bg: '#0b0f0e', soft: '#0e1311', surface: '#111614', card: '#141a1e', border: 'rgba(255,255,255,0.06)', text: '#d6e2dc', sub: '#9fb3ab'
+            }
+          },
+          boxShadow: { glow: '0 0 0 3px rgba(64,255,175,0.15) inset' },
+          borderRadius: { xxl: '1.25rem' }
+        }
+      }
+    }
+  </script>
+  <style>
+    body{background: radial-gradient(1200px 600px at 10% -10%, rgba(64,255,175,.08), transparent),
+                     radial-gradient(900px 500px at 90% -20%, rgba(64,255,175,.06), transparent),
+                     #0b0f0e;}
+    ::selection{background:#40ffaf;color:#001b0b}
+    /* minimal scrollbars to match portal */
+    *{scrollbar-width:thin; scrollbar-color: rgba(255,255,255,0.08) transparent}
+    *::-webkit-scrollbar{width:6px;height:6px}
+    *::-webkit-scrollbar-track{background:transparent}
+    *::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08); border-radius:999px}
+    *::-webkit-scrollbar-thumb:hover{background:rgba(64,255,175,0.35)}
+    .drag-handle{cursor:grab}
+    .dragging{opacity:.6; transform:scale(.98)}
+  </style>
+</head>
+<body class="bg-base-bg text-base-text p-6">
+  <header class="mb-6 flex items-center gap-3">
+    <span class="inline-flex items-center gap-2 font-semibold">
+      <span class="size-3 rounded-full" style="background:#40ffaf"></span>
+      Admin – Contributions
+    </span>
+    <div class="ml-auto flex items-center gap-2 text-sm">
+      <button id="btnRepoHelp" class="px-3 py-1.5 rounded-lg border border-base-border/50 text-base-text/80 hover:text-base-text">Configurer GitHub</button>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8">
+    <!-- Form side -->
+    <section class="space-y-6">
+      <div class="rounded-2xl p-5 border border-base-border/40 bg-base-surface/70 backdrop-blur-sm">
+        <h1 class="text-xl font-semibold mb-4">Ajouter / Modifier</h1>
+        <form id="form" class="space-y-3">
+          <input class="w-full px-3 py-2 rounded bg-base-card border border-base-border/30" id="title" placeholder="Titre" />
+          <input class="w-full px-3 py-2 rounded bg-base-card border border-base-border/30" id="summary" placeholder="Résumé" />
+          <select class="w-full px-3 py-2 rounded bg-base-card border border-base-border/30" id="category">
+            <option value="" disabled selected>Catégorie</option>
+            <option>Thread</option>
+            <option>Art</option>
+            <option>Meme</option>
+            <option>Event</option>
+            <option>Community</option>
+            <option>Tech</option>
+          </select>
+          <input class="w-full px-3 py-2 rounded bg-base-card border border-base-border/30" id="link" placeholder="Lien (optionnel)" />
+          <div class="flex items-center gap-3 pt-2">
+            <button id="submitBtn" type="submit" class="px-3 py-2 rounded bg-acc/20 border border-acc/50 hover:bg-acc/30">Ajouter</button>
+            <button id="cancelEdit" type="button" class="hidden px-3 py-2 rounded border border-base-border/40">Annuler</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="rounded-2xl p-5 border border-base-border/40 bg-base-surface/70 backdrop-blur-sm">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-lg font-semibold">Publier</h2>
+          <button id="publish" class="px-3 py-2 rounded bg-acc/20 border border-acc/50 hover:bg-acc/30">Publier vers GitHub</button>
+        </div>
+        <p class="text-sm text-base-sub">Repo : <code id="repoLabel" class="text-base-text/80">(non configuré)</code></p>
+      </div>
+
+      <div class="rounded-2xl p-5 border border-base-border/40 bg-base-surface/70 backdrop-blur-sm">
+        <h2 class="text-lg font-semibold">JSON</h2>
+        <pre id="json" class="bg-[#0a0e0c] border border-base-border/30 p-4 rounded overflow-auto max-h-72 text-xs mt-2"></pre>
+      </div>
+    </section>
+
+    <!-- Cards side -->
+    <section class="space-y-4">
+      <div class="rounded-2xl p-5 border border-base-border/40 bg-base-surface/70 backdrop-blur-sm">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-lg font-semibold">Vos contributions</h2>
+          <button id="seed" class="text-sm px-3 py-1.5 rounded border border-base-border/40">Seed demo</button>
+        </div>
+        <div id="list" class="grid sm:grid-cols-2 gap-4"></div>
+      </div>
+    </section>
+    <section class="space-y-4">
+      <div class="rounded-2xl p-5 border border-base-border/40 bg-base-surface/70 backdrop-blur-sm">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-lg font-semibold">Tests</h2>
+          <button id="runTests" class="text-sm px-3 py-1.5 rounded border border-base-border/40">Run</button>
+        </div>
+        <div id="testOut" class="text-xs text-base-sub"></div>
+      </div>
+    </section>
+  </main>
+
+  <template id="card">
+    <article class="relative rounded-2xl border p-4 bg-base-card border-base-border/30" draggable="true">
+      <div class="flex items-start justify-between">
+        <span class="text-xs px-2 py-1 rounded-full border border-base-border/40"><span class="c-cat">cat</span></span>
+        <div class="drag-handle text-base-sub select-none">⋮⋮</div>
+      </div>
+      <h3 class="mt-3 text-base font-semibold c-title">Title</h3>
+      <p class="text-sm mt-1 text-base-sub c-summary">Summary</p>
+      <div class="mt-3 flex items-center gap-2">
+        <a class="c-link inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-acc/60 text-acc hover:shadow-glow" target="_blank" rel="noreferrer">Open →</a>
+        <span class="c-soon hidden text-xs px-2 py-1 rounded-lg" style="background: rgba(64,255,175,0.1); color:#40ffaf">Soon</span>
+      </div>
+      <div class="mt-3 text-xs text-base-sub"><span class="c-date">--/--/----</span></div>
+      <div class="mt-3 flex items-center gap-2">
+        <button type="button" class="btn-edit px-2 py-1 rounded border border-base-border/40 text-xs">Modifier</button>
+        <button type="button" class="btn-del px-2 py-1 rounded border border-base-border/40 text-xs">Supprimer</button>
+      </div>
+      <div class="absolute inset-0 rounded-2xl pointer-events-none" style="box-shadow: inset 0 0 0 1px rgba(64,255,175,0.04)"></div>
+    </article>
+  </template>
+
+  <script>
+  // --- State ---
+  let data = { profile: {}, items: [] };
+  let editingIndex = -1; // -1 = add mode
+  let dragSrc = null; // index source pour D&D
+
+  // --- Refs ---
+  const form = document.getElementById('form');
+  const titleEl = document.getElementById('title');
+  const summaryEl = document.getElementById('summary');
+  const categoryEl = document.getElementById('category');
+  const linkEl = document.getElementById('link');
+  const submitBtn = document.getElementById('submitBtn');
+  const cancelEdit = document.getElementById('cancelEdit');
+
+  const jsonEl = document.getElementById('json');
+  const list = document.getElementById('list');
+  const cardTpl = document.getElementById('card');
+
+  const publishBtn = document.getElementById('publish');
+  const repoLabel = document.getElementById('repoLabel');
+  const seedBtn = document.getElementById('seed');
+
+  // --- Boot (load from localStorage for convenience) ---
+  try { const raw = localStorage.getItem('admin_items'); if (raw) data.items = JSON.parse(raw); } catch {}
+  try { const rawP = localStorage.getItem('admin_profile'); if (rawP) data.profile = JSON.parse(rawP); } catch {}
+  repoLabel.textContent = localStorage.getItem('repo') || '(non configuré)';
+
+  function persist(){
+    localStorage.setItem('admin_items', JSON.stringify(data.items));
+    localStorage.setItem('admin_profile', JSON.stringify(data.profile));
+  }
+
+  // --- Form submit (add / update) ---
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const title = titleEl.value.trim();
+    const summary = summaryEl.value.trim();
+    const category = categoryEl.value.trim();
+    const link = linkEl.value.trim();
+    if (!title) return alert('Titre requis.');
+    if (!category) return alert('Choisis une catégorie.');
+
+    const item = { title, summary, category, link: link || null, createdAt: new Date().toISOString() };
+
+    if (editingIndex > -1) {
+      data.items[editingIndex] = { ...data.items[editingIndex], ...item };
+    } else {
+      data.items.unshift(item);
+    }
+    editingIndex = -1;
+    submitBtn.textContent = 'Ajouter';
+    cancelEdit.classList.add('hidden');
+    form.reset();
+    update();
+  });
+
+  cancelEdit.addEventListener('click', ()=>{
+    editingIndex = -1; submitBtn.textContent = 'Ajouter'; cancelEdit.classList.add('hidden'); form.reset();
+  });
+
+  // --- Render list as cards with drag & drop ---
+  function renderList(){
+    list.innerHTML = '';
+    if (data.items.length === 0){
+      list.innerHTML = '<div class="rounded-2xl p-5 border border-base-border/20 bg-base-surface/70 text-base-sub">Aucune contribution.</div>';
+      return;
+    }
+    data.items.forEach((it, idx)=>{
+      const n = cardTpl.content.cloneNode(true);
+      const el = n.querySelector('article');
+      el.dataset.index = idx;
+      n.querySelector('.c-cat').textContent = it.category || '—';
+      n.querySelector('.c-title').textContent = it.title || '';
+      n.querySelector('.c-summary').textContent = it.summary || '';
+      n.querySelector('.c-date').textContent = new Date(it.createdAt||Date.now()).toLocaleDateString();
+      const linkA = n.querySelector('.c-link');
+      const soon = n.querySelector('.c-soon');
+      if (it.link) { linkA.href = it.link; } else { linkA.classList.add('hidden'); soon.classList.remove('hidden'); }
+
+      // edit / delete
+      n.querySelector('.btn-edit').addEventListener('click', ()=>{
+        editingIndex = idx;
+        titleEl.value = it.title || '';
+        summaryEl.value = it.summary || '';
+        categoryEl.value = it.category || '';
+        linkEl.value = it.link || '';
+        submitBtn.textContent = 'Mettre à jour';
+        cancelEdit.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      const delBtn = n.querySelector('.btn-del');
+      delBtn.addEventListener('click', ()=>{
+        if (!delBtn.dataset.arm) {
+          delBtn.dataset.arm = '1';
+          const original = delBtn.textContent;
+          delBtn.textContent = 'Confirmer';
+          delBtn.classList.add('border-red-400/60','text-red-300');
+          setTimeout(()=>{
+            delBtn.dataset.arm='';
+            delBtn.textContent = original;
+            delBtn.classList.remove('border-red-400/60','text-red-300');
+          },1500);
+          return;
+        }
+        data.items.splice(idx,1);
+        update();
+      });
+
+      // drag & drop
+      el.addEventListener('dragstart', (ev)=>{ dragSrc = idx; el.classList.add('dragging'); });
+      el.addEventListener('dragend', ()=>{ dragSrc = null; el.classList.remove('dragging'); });
+      el.addEventListener('dragover', (ev)=>{ ev.preventDefault(); });
+      el.addEventListener('drop', (ev)=>{
+        ev.preventDefault();
+        const to = idx;
+        if (dragSrc === null || dragSrc === to) return;
+        const arr = [...data.items];
+        const [moved] = arr.splice(dragSrc,1);
+        arr.splice(to,0,moved);
+        data.items = arr; update();
+      });
+
+      list.appendChild(n);
+    });
+  }
+
+  function update(){
+    persist();
+    renderList();
+    jsonEl.textContent = JSON.stringify(data, null, 2);
+  }
+  update();
+
+  // Seed demo
+  seedBtn.addEventListener('click', ()=>{
+    data.items = [
+      { title:'Ritual Album Event', summary:'Twitter Post', category:'Event', link:'#', createdAt:new Date().toISOString() },
+      { title:'Ritual Collection #7', summary:'Twitter Post', category:'Art', link:'#', createdAt:new Date(Date.now()-86400000).toISOString() }
+    ];
+    update();
+  });
+
+  // --- GitHub Publish ---
+  publishBtn.addEventListener('click', async () => {
+    const repo = localStorage.getItem('repo');
+    const token = localStorage.getItem('token');
+    if(!repo || !token){
+      alert("Configurez votre repo GitHub et token d'authentification.");
+      return;
+    }
+    const jsonContent = JSON.stringify(data, null, 2);
+    const path = 'contributions.json';
+
+    // Get existing file SHA if exists
+    let sha = undefined;
+    const resGet = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`);
+    if (resGet.ok) { const existing = await resGet.json(); sha = existing.sha; }
+
+    const body = {
+      message: 'update contributions',
+      content: btoa(unescape(encodeURIComponent(jsonContent))),
+      sha
+    };
+
+    const resPut = await fetch(`https://api.github.com/repos/${repo}/contents/${path}` ,{
+      method: 'PUT',
+      headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    if (!resPut.ok) {
+      const msg = await resPut.text();
+      alert('Erreur GitHub: '+msg);
+    } else {
+      alert('Publié ✨');
+    }
+  });
+
+  // Small helper for repo help
+  document.getElementById('btnRepoHelp').addEventListener('click', ()=>{
+    const r = prompt('Repo (format user/repo) :', localStorage.getItem('repo')||'');
+    if (r) localStorage.setItem('repo', r);
+    const t = prompt('GitHub token (contents:write) :', localStorage.getItem('token')||'');
+    if (t) localStorage.setItem('token', t);
+    repoLabel.textContent = localStorage.getItem('repo') || '(non configuré)';
+  });
+  </script>
+</body>
+</html>
