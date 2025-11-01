@@ -189,12 +189,12 @@
 
       n.querySelector('.c-title').textContent   = titleEl.value || '';
       n.querySelector('.c-summary').textContent = summaryEl.value || '';
-      n.querySelector('.c-cat').textContent = it.category || '';
+      n.querySelector('.c-cat').textContent = categoryEl.value || '';
 
       const d = (dateEl.value || new Date().toISOString().slice(0,10));
       n.querySelector('.c-date').textContent = new Date(d).toLocaleDateString();
 
-      const a    = n.querySelector('.c-link');
+      const a = n.querySelector('.c-link') || document.createElement('a');
       const soon = n.querySelector('.c-soon');
       const url  = (linkEl.value || '').trim();
       if (url){ a.href = url; a.classList.remove('hidden'); soon.classList.add('hidden'); }
@@ -266,7 +266,7 @@
         const el = n.querySelector('article');
         el.dataset.index = idx;
 
-        n.querySelector('.c-cat').textContent     = it.category || '—';
+        n.querySelector('.c-cat').textContent = categoryEl.value || '';
         n.querySelector('.c-title').textContent   = it.title || '';
         n.querySelector('.c-summary').textContent = it.summary || '';
 
@@ -335,7 +335,7 @@
     function update(){
       persist();
       renderList();
-      jsonEl.textContent = JSON.stringify(data, null, 2);
+      jsonEl.value = JSON.stringify(data.items, null, 2);
     }
     update(); // initial render
 
