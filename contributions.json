@@ -2,13 +2,31 @@
   "profile": {},
   "items": [
     {
+      "title": "event winner #1",
+      "summary": "bomb party round 2!!",
+      "category": "Event",
+      "link": "https://discord.com/channels/1210468736205852672/1389298240762937414/1421584394803609771https://discord.com/channels/1210468736205852672/1389298240762937414/1421584394803609771",
+      "effort": "1h",
+      "date": "09/28/2025",
+      "createdAt": "2025-11-01T15:08:38.228Z"
+    },
+    {
+      "title": "ritual community post #5",
+      "summary": "received a custom banner from Adp",
+      "category": "Community",
+      "link": "https://x.com/AdpArtsOfficial/status/1973484886171459966",
+      "effort": "1min",
+      "date": "10/02/25",
+      "createdAt": "2025-11-01T15:08:47.811Z"
+    },
+    {
       "title": "ritual community post #4",
       "summary": "my puurfect outfit #SiggyHalloween",
       "category": "Community",
       "link": "https://x.com/pince_croco/status/1983782025825038838",
       "effort": "2min",
-      "date": "30/10/25",
-      "createdAt": "2025-11-01T14:13:24.338Z"
+      "date": "10/30/25",
+      "createdAt": "2025-11-01T15:08:58.698Z"
     },
     {
       "title": "ritual community post #3",
@@ -16,8 +34,8 @@
       "category": "Community",
       "link": "https://x.com/pince_croco/status/1984227411039519076",
       "effort": "1min",
-      "date": "31/10/25",
-      "createdAt": "2025-11-01T14:11:56.000Z"
+      "date": "10/31/25",
+      "createdAt": "2025-11-01T15:09:10.354Z"
     },
     {
       "title": "21 Days of Prompts #9",
@@ -26,7 +44,7 @@
       "link": "https://x.com/pince_croco/status/1976981306635698689",
       "effort": "15min",
       "date": "11/10/25",
-      "createdAt": "2025-11-01T14:14:53.326Z"
+      "createdAt": "2025-11-01T15:10:10.593Z"
     },
     {
       "title": "ritual community post #2",
@@ -34,8 +52,8 @@
       "category": "Community",
       "link": "https://x.com/pince_croco/status/1984508605182226789",
       "effort": "30min",
-      "date": "01/11/25",
-      "createdAt": "2025-11-01T14:06:25.882Z"
+      "date": "11/01/25",
+      "createdAt": "2025-11-01T15:11:32.039Z"
     },
     {
       "title": "ritual community post #1",
@@ -43,8 +61,8 @@
       "category": "Community",
       "link": "https://x.com/pince_croco/status/1983009806777757892",
       "effort": "5min",
-      "date": "28/10/25",
-      "createdAt": "2025-11-01T14:06:30.291Z"
+      "date": "10/28/25",
+      "createdAt": "2025-11-01T15:10:23.414Z"
     },
     {
       "title": "jigsaw marathon #1",
@@ -52,8 +70,8 @@
       "category": "Event",
       "link": "https://x.com/pince_croco/status/1983009806777757892",
       "effort": "2h",
-      "date": "28/10/2025",
-      "createdAt": "2025-11-01T14:03:48.263Z"
+      "date": "10/28/2025",
+      "createdAt": "2025-11-01T15:08:27.998Z"
     },
     {
       "title": "21 Days of Prompts #8",
@@ -62,7 +80,7 @@
       "link": "https://x.com/pince_croco/status/1976604587172966792",
       "effort": "45min",
       "date": "10/10/2025",
-      "createdAt": "2025-11-01T14:14:40.484Z"
+      "createdAt": "2025-11-01T15:10:35.923Z"
     },
     {
       "title": "21 Days of Prompts #7",
@@ -70,8 +88,8 @@
       "category": "Thread",
       "link": "https://x.com/pince_croco/status/1975955707901124791",
       "effort": "45min",
-      "date": "09/10/2025",
-      "createdAt": "2025-11-01T13:56:39.948Z"
+      "date": "10/09/2025",
+      "createdAt": "2025-11-01T15:10:49.318Z"
     },
     {
       "title": "21 Days of Prompts #6",
@@ -79,8 +97,8 @@
       "category": "Thread",
       "link": "https://x.com/pince_croco/status/1975117063590142430",
       "effort": "20min",
-      "date": "06/10/2025",
-      "createdAt": "2025-11-01T13:55:43.488Z"
+      "date": "10/06/2025",
+      "createdAt": "2025-11-01T15:11:14.998Z"
     },
     {
       "title": "21 Days of Prompts #5",
@@ -88,8 +106,8 @@
       "category": "Thread",
       "link": "https://x.com/pince_croco/status/1974816675141763246",
       "effort": "2h",
-      "date": "05/10/2025",
-      "createdAt": "2025-11-01T13:54:52.389Z"
+      "date": "10/05/2025",
+      "createdAt": "2025-11-01T15:12:04.135Z"
     },
     {
       "title": "21 Days of Prompts #4",
@@ -97,8 +115,8 @@
       "category": "Thread",
       "link": "https://x.com/pince_croco/status/1974475769092120602",
       "effort": "2h30",
-      "date": "04/10/2025",
-      "createdAt": "2025-11-01T13:53:53.243Z"
+      "date": "10/04/2025",
+      "createdAt": "2025-11-01T15:12:16.043Z"
     },
     {
       "title": "21 Days of Prompts #3",
@@ -106,8 +124,8 @@
       "category": "Thread",
       "link": "https://x.com/pince_croco/status/1974047076058345640",
       "effort": "30min",
-      "date": "03/10/2025",
-      "createdAt": "2025-11-01T13:52:22.156Z"
+      "date": "10/03/2025",
+      "createdAt": "2025-11-01T15:12:25.868Z"
     },
     {
       "title": "21 Days of Prompts #2",
@@ -115,8 +133,8 @@
       "category": "Thread",
       "link": "https://x.com/pince_croco/status/1973736941142307018",
       "effort": "1h30",
-      "date": "02/10/25",
-      "createdAt": "2025-11-01T13:50:04.747Z"
+      "date": "10/02/25",
+      "createdAt": "2025-11-01T15:12:36.809Z"
     },
     {
       "title": "21 Days of Prompts #1",
@@ -124,8 +142,8 @@
       "category": "Thread",
       "link": "https://x.com/pince_croco/status/1973283108851163583",
       "effort": "1h30",
-      "date": "01/10/25",
-      "createdAt": "2025-11-01T13:45:23.852Z"
+      "date": "10/01/25",
+      "createdAt": "2025-11-01T15:12:50.730Z"
     },
     {
       "title": "small website",
@@ -133,8 +151,8 @@
       "category": "Tech",
       "link": null,
       "effort": "7h",
-      "date": "2025-11-01",
-      "createdAt": "2025-11-01T13:42:58.667Z"
+      "date": "11/01/2025",
+      "createdAt": "2025-11-01T15:14:37.083Z"
     },
     {
       "title": "meme #6",
@@ -142,8 +160,8 @@
       "category": "Meme",
       "link": "https://discord.com/channels/1210468736205852672/1210630180167622736/1425188999496073443",
       "effort": "2min",
-      "date": "08/10/2025",
-      "createdAt": "2025-11-01T13:25:21.781Z"
+      "date": "10/08/2025",
+      "createdAt": "2025-11-01T15:14:20.271Z"
     },
     {
       "title": "meme #5",
@@ -151,8 +169,8 @@
       "category": "Meme",
       "link": "https://discord.com/channels/1210468736205852672/1210630180167622736/1424386787375054908",
       "effort": "2min",
-      "date": "05/10/2025",
-      "createdAt": "2025-11-01T13:24:49.827Z"
+      "date": "10/05/2025",
+      "createdAt": "2025-11-01T15:14:08.321Z"
     },
     {
       "title": "meme #4",
@@ -160,8 +178,8 @@
       "category": "Meme",
       "link": "https://discord.com/channels/1210468736205852672/1210630180167622736/1424057232273838301",
       "effort": "2min",
-      "date": "04/10/2025",
-      "createdAt": "2025-11-01T13:24:05.182Z"
+      "date": "10/04/2025",
+      "createdAt": "2025-11-01T15:13:58.034Z"
     },
     {
       "title": "meme #3",
@@ -169,8 +187,8 @@
       "category": "Meme",
       "link": "https://discord.com/channels/1210468736205852672/1210630180167622736/1423577842024714302",
       "effort": "2min",
-      "date": "03/10/2025",
-      "createdAt": "2025-11-01T13:23:12.846Z"
+      "date": "10/03/2025",
+      "createdAt": "2025-11-01T15:13:45.084Z"
     },
     {
       "title": "meme #1",
@@ -178,8 +196,8 @@
       "category": "Meme",
       "link": "https://discord.com/channels/1210468736205852672/1210630180167622736/1422618246498095265",
       "effort": "2min",
-      "date": "01/10/25",
-      "createdAt": "2025-11-01T13:22:01.180Z"
+      "date": "10/01/25",
+      "createdAt": "2025-11-01T15:13:30.692Z"
     },
     {
       "title": "meme #2",
@@ -187,8 +205,8 @@
       "category": "Meme",
       "link": "https://discord.com/channels/1210468736205852672/1210630180167622736/1423176619727782001",
       "effort": "2min",
-      "date": "02/10/25",
-      "createdAt": "2025-11-01T13:21:33.227Z"
+      "date": "10/02/25",
+      "createdAt": "2025-11-01T15:13:20.596Z"
     }
   ]
 }
