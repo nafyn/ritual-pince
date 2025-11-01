@@ -189,7 +189,7 @@
 
       n.querySelector('.c-title').textContent   = titleEl.value || '';
       n.querySelector('.c-summary').textContent = summaryEl.value || '';
-      n.querySelector('.c-cat').textContent = it.category || '';
+      n.querySelector('.c-cat').textContent = categoryEl.options[categoryEl.selectedIndex]?.textContent || '';
 
       const d = (dateEl.value || new Date().toISOString().slice(0,10));
       n.querySelector('.c-date').textContent = new Date(d).toLocaleDateString();
@@ -266,7 +266,7 @@
         const el = n.querySelector('article');
         el.dataset.index = idx;
 
-        n.querySelector('.c-cat').textContent = categoryEl.value || '';
+        n.querySelector('.c-cat').textContent = it.category || '';
         n.querySelector('.c-title').textContent   = it.title || '';
         n.querySelector('.c-summary').textContent = it.summary || '';
 
