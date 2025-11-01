@@ -137,8 +137,8 @@
             <path d="M107.7,8.07A105.15,105.15,0,0,0,81.73,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,48.76,6.83,72.37,72.37,0,0,0,45.4,0,105.89,105.89,0,0,0,19.44,8.09C2.82,32.65-1.71,56.6.54,80c12.7,9.39,24.89,15.08,36.84,18.93A77.7,77.7,0,0,0,47.6,87.12a68.42,68.42,0,0,1-10.84-5.26c.91-.66,1.8-1.37,2.66-2.08a75.57,75.57,0,0,0,48.29,0c.87.71,1.76,1.42,2.66,2.08A68.68,68.68,0,0,1,79.53,87.1a77.18,77.18,0,0,0,10.28,11.85c11.94-3.86,24.13-9.54,36.84-18.93C128.85,56.6,124.32,32.65,107.7,8.07ZM42.71,65.69c-7.06,0-12.82-6.3-12.82-14s5.66-14,12.82-14S55.53,43,55.53,51.72,49.77,65.69,42.71,65.69Zm41.72,0c-7.06,0-12.82-6.3-12.82-14s5.65-14,12.82-14,12.82,6.3,12.82,14S91.49,65.69,84.43,65.69Z"/>
             </svg>
             <span>pince_croco</span></a>
-
           </div>
+          <p id="stats" class="text-sm text-acc mt-3"></p>
         </div>
       </div>
     </section>
@@ -263,6 +263,47 @@
     };
   }
 
+    function updateStats() {
+      const statsEl = document.getElementById("stats");
+      if (!statsEl) return;
+    
+      const items = state.items || [];
+      const contributions = items.length;
+    
+      // On convertit les efforts en heures si possible
+      let totalHours = 0;
+    
+      items.forEach(it => {
+        if (!it.effort) return;
+    
+        let str = it.effort.trim().toLowerCase();
+    
+        // ex: "2h" → 2h
+        if (str.endsWith("h")) {
+          totalHours += parseFloat(str);
+          return;
+        }
+    
+        // ex: "30min" → 0.5h
+        if (str.includes("min")) {
+          const mins = parseFloat(str);
+          totalHours += (mins / 60);
+          return;
+        }
+    
+        // ex: "2j" → 48h
+        if (str.endsWith("j")) {
+          totalHours += parseFloat(str) * 24;
+          return;
+        }
+      });
+    
+      // On arrondit gentiment
+      totalHours = Math.round(totalHours * 10) / 10;
+    
+      statsEl.textContent = `gave ~${totalHours}h through ${contributions} contributions`;
+    }
+
     function render(){
       styleActiveChips();
       let items = state.items.map(mapToPublic);
@@ -305,6 +346,7 @@
       // JSON debug
       document.getElementById('json').textContent = JSON.stringify({profile: state.profile, items: state.items}, null, 2);
     }
+    
 
     function hydrateProfile(p){
       if(!p) return;
@@ -325,6 +367,7 @@
           state.profile = data.profile||{};
           hydrateProfile(state.profile);
           render();
+          updateStats();
           return;
         }
       }catch(_){/* ignore */}
