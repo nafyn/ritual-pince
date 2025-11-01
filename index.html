@@ -272,15 +272,16 @@
       }
       items.forEach(p=>{
         const n = tpl.content.cloneNode(true);
-        n.querySelector('span').textContent = p.category;
-        n.querySelector('.date').textContent = p.date
-          ? new Date(p.date).toLocaleDateString()
-          : new Date(p.createdAt||Date.now()).toLocaleDateString();
-        n.querySelector('h3').textContent = p.title;
-        n.querySelector('.desc').textContent = p.desc||'';
-        n.querySelector('.eff').textContent = p.effort ? `Effort ~ ${p.effort}` : '';
-        const btn = n.querySelector('.btn');
-        const soon = n.querySelector('.soon');
+        n.querySelector('.c-cat').textContent = p.category;
+        n.querySelector('.c-date').textContent = p.date
+           ? new Date(p.date).toLocaleDateString()
+           : new Date(p.createdAt || Date.now()).toLocaleDateString();
+        n.querySelector('.c-title').textContent = p.title;
+        n.querySelector('.c-summary').textContent = p.desc || '';
+        n.querySelector('.c-eff').textContent = p.effort ? `Effort ~ ${p.effort}` : '';
+        
+        const btn = n.querySelector('.c-link');
+        const soon = n.querySelector('.c-soon');
         if(p.url){ btn.href=p.url; } else { btn.classList.add('hidden'); soon.classList.remove('hidden'); }
         grid.appendChild(n);
       })
