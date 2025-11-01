@@ -182,15 +182,23 @@
     if (!title) return alert('Titre requis.');
     if (!category) return alert('Choisis une catégorie.');
 
-    const item = {
+    let date = document.getElementById("date").value.trim();
+    if (!date) {
+    date = new Date().toISOString().slice(0, 10); // YYYY-MM-DD auto si vide
+  }
+
+  const effort = document.getElementById("effort").value.trim();
+
+  const item = {
     title,
     summary,
     category,
     link: link || null,
     effort: effort || null,
-    date: date || null,
+    date,
     createdAt: new Date().toISOString()
-    };
+  };
+
 
     if (editingIndex > -1) {
       data.items[editingIndex] = { ...data.items[editingIndex], ...item };
