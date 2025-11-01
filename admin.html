@@ -99,6 +99,7 @@
           <h2 class="text-lg font-semibold">Vos contributions</h2>
           <button id="seed" class="text-sm px-3 py-1.5 rounded border border-base-border/40">Seed demo</button>
         </div>
+        <div id="livePreview" class="hidden"></div>
         <div id="list" class="grid sm:grid-cols-2 gap-4"></div>
       </div>
     </section>
@@ -152,6 +153,7 @@
   const jsonEl = document.getElementById('json');
   const list = document.getElementById('list');
   const cardTpl = document.getElementById('card');
+  const livePreview = document.getElementById('livePreview');
 
   const publishBtn = document.getElementById('publish');
   const repoLabel = document.getElementById('repoLabel');
@@ -209,6 +211,7 @@
     submitBtn.textContent = 'Ajouter';
     cancelEdit.classList.add('hidden');
     form.reset();
+    updatePreview();
     update();
   });
 
@@ -318,6 +321,7 @@ function renderList(){
   function update(){
     persist();
     renderList();
+    updatePreview();
     jsonEl.textContent = JSON.stringify(data, null, 2);
   }
   update();
