@@ -138,7 +138,7 @@
             </svg>
             <span>pince_croco</span></a>
           </div>
-          <p id="stats" class="text-sm text-acc mt-3"></p>
+          <p id="stats" class="text-sm mt-3 text-base-sub"></p>
         </div>
       </div>
     </section>
@@ -264,24 +264,43 @@
   }
 
     function updateStats() {
-    const statsEl = document.getElementById("stats");
-    if (!statsEl) return;
-  
-    const items = state.items.map(mapToPublic) || [];
-    const contributions = items.length;
-  
-    let totalHours = 0;
-    items.forEach(it => {
-      if (!it.effort) return;
-      let str = it.effort.trim().toLowerCase();
-      if (str.endsWith("h")) totalHours += parseFloat(str);
-      else if (str.includes("min")) totalHours += parseFloat(str) / 60;
-      else if (str.endsWith("j")) totalHours += parseFloat(str) * 24;
-    });
-  
-    totalHours = Math.round(totalHours * 10) / 10;
-    statsEl.textContent = `gave ~${totalHours}h of her life through ${contributions} contributions`;
+  const statsEl = document.getElementById("stats");
+  if (!statsEl) return;
+
+  const items = state.items.map(mapToPublic) || [];
+  const contributions = items.length;
+
+  let totalHours = 0;
+  items.forEach(it => {
+    if (!it.effort) return;
+    let str = it.effort.trim().toLowerCase();
+    if (str.endsWith("h")) totalHours += parseFloat(str);
+    else if (str.includes("min")) totalHours += parseFloat(str) / 60;
+    else if (str.endsWith("j")) totalHours += parseFloat(str) * 24;
+  });
+
+  totalHours = Math.round(totalHours * 10) / 10;
+
+  // --------- ANIMATION DU COMPTEUR ----------
+  let start = 0;
+  const end = contributions;
+  const duration = 900; // ms
+  const startTime = performance.now();
+
+  function tick(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const value = Math.floor(progress * end);
+
+    statsEl.innerHTML = `
+      gave <span style="color:#40ffaf">~${totalHours}h</span> through
+      <span style="color:#40ffaf">${value}</span> contributions
+    `;
+
+    if (progress < 1) requestAnimationFrame(tick);
   }
+
+  requestAnimationFrame(tick);
+}
 
     function render(){
       styleActiveChips();
