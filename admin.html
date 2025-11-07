@@ -164,12 +164,7 @@ async function loadFromGitHub() {
     // 🧠 GitHub devient la source de vérité
     data = remote;
 
-    // On synchronise localStorage
-    persist();
-
-    // On re-render l’UI proprement
-    renderList();
-    jsonEl.value = JSON.stringify(data.items, null, 2);
+    update(); // ← on laisse update() faire le job normal
 
     console.log("✅ Contributions chargées depuis GitHub");
   } catch (err) {
