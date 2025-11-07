@@ -196,14 +196,13 @@ async function loadFromGitHub() {
     const seedBtn    = document.getElementById('seed');
 
     // ---------- Boot (localStorage) ----------
-    try { const raw = localStorage.getItem('admin_items');   if (raw)  data.items   = JSON.parse(raw); } catch {}
     try { const rawP = localStorage.getItem('admin_profile'); if (rawP) data.profile = JSON.parse(rawP);} catch {}
 repoLabel.textContent = localStorage.getItem('repo') || '(non configuré)';
 
     function persist(){
-      localStorage.setItem('admin_items',   JSON.stringify(data.items));
-      localStorage.setItem('admin_profile', JSON.stringify(data.profile));
-    }
+  // On ne sauvegarde plus les items → GitHub est la source de vérité
+  localStorage.setItem('admin_profile', JSON.stringify(data.profile));
+}
 
     // ---------- Preview live ----------
     function updatePreview(){
