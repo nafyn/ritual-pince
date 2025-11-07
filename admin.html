@@ -374,7 +374,7 @@ repoLabel.textContent = localStorage.getItem('repo') || '(non configuré)';
       jsonEl.value = JSON.stringify(data.items, null, 2);
     }
     update(); // initial render
-    loadFromGitHub();
+    setTimeout(loadFromGitHub, 50);
 
     // ---------- Seed demo ----------
     seedBtn.addEventListener('click', ()=>{
