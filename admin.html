@@ -141,6 +141,42 @@
     let editingIndex = -1;
     let dragSrc = null;
 
+    const DATA_FILE = "contributions.json";
+
+async function loadFromGitHub() {
+  const repo = localStorage.getItem('repo');
+  if (!repo) {
+    console.warn("⚠️ Aucun repo configuré → on utilise seulement le localStorage.");
+    return;
+  }
+
+  try {
+    const url = `https://raw.githubusercontent.com/${repo}/main/${DATA_FILE}?t=${Date.now()}`;
+    const res = await fetch(url);
+
+    if (!res.ok) {
+      console.warn("ℹ️ contributions.json n'existe pas encore sur GitHub → première publication nécessaire.");
+      return;
+    }
+
+    const remote = await res.json();
+
+    // 🧠 GitHub devient la source de vérité
+    data = remote;
+
+    // On synchronise localStorage
+    persist();
+
+    // On re-render l’UI proprement
+    renderList();
+    jsonEl.value = JSON.stringify(data.items, null, 2);
+
+    console.log("✅ Contributions chargées depuis GitHub");
+  } catch (err) {
+    console.error("❌ Erreur durant fetch GitHub:", err);
+  }
+}
+
     // ---------- Refs ----------
     const form       = document.getElementById('form');
     const titleEl    = document.getElementById('title');
@@ -167,7 +203,7 @@
     // ---------- Boot (localStorage) ----------
     try { const raw = localStorage.getItem('admin_items');   if (raw)  data.items   = JSON.parse(raw); } catch {}
     try { const rawP = localStorage.getItem('admin_profile'); if (rawP) data.profile = JSON.parse(rawP);} catch {}
-    repoLabel.textContent = localStorage.getItem('repo') || '(non configuré)';
+repoLabel.textContent = localStorage.getItem('repo') || '(non configuré)';
 
     function persist(){
       localStorage.setItem('admin_items',   JSON.stringify(data.items));
@@ -338,6 +374,7 @@
       jsonEl.value = JSON.stringify(data.items, null, 2);
     }
     update(); // initial render
+    loadFromGitHub();
 
     // ---------- Seed demo ----------
     seedBtn.addEventListener('click', ()=>{
