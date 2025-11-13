@@ -2,6 +2,33 @@
   "profile": {},
   "items": [
     {
+      "title": "event winner #11",
+      "summary": "guess the logo top1",
+      "category": "Event",
+      "link": "https://discord.com/channels/1210468736205852672/1422747418851807272/1438540452503617587",
+      "effort": "1h",
+      "date": "11/13/25",
+      "createdAt": "2025-11-13T15:52:54.689Z"
+    },
+    {
+      "title": "event participation #10",
+      "summary": "to lolbeans (by Sachin & Reddy)",
+      "category": "Event",
+      "link": "https://discord.com/channels/1210468736205852672/1282738148639637595/1438548824326144062",
+      "effort": "1h",
+      "date": "11/13/2025",
+      "createdAt": "2025-11-13T15:51:56.111Z"
+    },
+    {
+      "title": "event hosting #3",
+      "summary": "jigsaw marathon race",
+      "category": "Event",
+      "link": "https://discord.com/channels/1210468736205852672/1314448920633413673/1437428881165647934",
+      "effort": "2h",
+      "date": "11/11/2025",
+      "createdAt": "2025-11-13T15:50:36.845Z"
+    },
+    {
       "title": "event winner #10",
       "summary": "guess the logo top1",
       "category": "Event",
@@ -38,22 +65,22 @@
       "createdAt": "2025-11-07T17:49:37.735Z"
     },
     {
-      "title": "event hosting #1",
-      "summary": "jigsaw marathon race",
-      "category": "Event",
-      "link": "https://discord.com/channels/1210468736205852672/1422747418851807272/1432717000857092248",
-      "effort": "1h",
-      "date": "10/28/2025",
-      "createdAt": "2025-11-07T17:48:08.919Z"
-    },
-    {
       "title": "event hosting #2",
       "summary": "jigsaw marathon race",
       "category": "Event",
       "link": "https://discord.com/channels/1210468736205852672/1422747418851807272/1435238691273707642",
-      "effort": "1h",
+      "effort": "2h",
       "date": "11/04/2025",
-      "createdAt": "2025-11-07T17:47:20.623Z"
+      "createdAt": "2025-11-13T15:50:42.567Z"
+    },
+    {
+      "title": "event hosting #1",
+      "summary": "jigsaw marathon race",
+      "category": "Event",
+      "link": "https://discord.com/channels/1210468736205852672/1314448920633413673/1432568919159210104",
+      "effort": "2h",
+      "date": "10/28/2025",
+      "createdAt": "2025-11-13T15:50:54.034Z"
     },
     {
       "title": "event participation #6",
